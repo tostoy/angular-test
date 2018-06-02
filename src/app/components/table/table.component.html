@@ -1,0 +1,51 @@
+<input type="date" [(ngModel)]="date">
+<input type="button" value="Zeitpunkt auswaehlen" (click)="setTime()">
+
+    
+
+<div>
+    
+
+    <mat-table [dataSource]="dataSource">
+      
+      <ng-container matColumnDef="air_humidity">
+        <mat-header-cell *matHeaderCellDef> Luftfeuchtigkeit </mat-header-cell>
+        <mat-cell *matCellDef="let all"> {{all.air_humidity}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="air_pressure">
+        <mat-header-cell *matHeaderCellDef> Luftdruck </mat-header-cell>
+        <mat-cell *matCellDef="let all"> {{all.air_pressure}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="air_temperature">
+        <mat-header-cell *matHeaderCellDef> Temperatur </mat-header-cell>
+        <mat-cell *matCellDef="let all"> {{all.air_temperature}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Zeitstempel </mat-header-cell>
+        <mat-cell *matCellDef="let all"> {{all.datetime}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="node_id">
+        <mat-header-cell *matHeaderCellDef> node_id </mat-header-cell>
+        <mat-cell *matCellDef="let all"> {{all.node_id}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="particle_100">
+        <mat-header-cell *matHeaderCellDef> Partikel 100 </mat-header-cell>
+        <mat-cell *matCellDef="let all"> {{all.particle_100}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="particle_25">
+        <mat-header-cell *matHeaderCellDef> Partikel 25 </mat-header-cell>
+        <mat-cell *matCellDef="let all"> {{all.particle_25}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="long">
+        <mat-header-cell *matHeaderCellDef> Longitude </mat-header-cell>
+        <mat-cell *matCellDef="let all"> {{all.longitude}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="lat">
+        <mat-header-cell *matHeaderCellDef> Latitude </mat-header-cell>
+        <mat-cell *matCellDef="let all"> {{all.latitude}} </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    
+  </div>

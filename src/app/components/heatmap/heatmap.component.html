@@ -1,0 +1,67 @@
+<div class = "mapwrap">
+    <div class = "map" id="map"></div>
+    <div class = "legende">
+        <svg width="20" height="150">
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#326496;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#c8daec;stop-opacity:1" />
+            </linearGradient>
+            <rect width="20" height="150" fill="url(#grad1)"/>
+        </svg>
+    </div>
+    <div class = "legendeTextTop">
+        <p>- obere Grenze</p>
+    </div>
+    <div class = "legendeTextCenter">
+        <p>- mitte</p>
+    </div>
+    <div class = "legendeTextBottom">
+        <p>- untere Grenze</p>
+    </div>
+</div>
+
+
+
+<div class = "layerAuswahl">
+    <input type="radio" name="opt[]" value="layer0" (click)="setLayer(0);" checked> Standartansicht<br>
+    <input type="radio" name="opt[]" value="layer1" (click)="setLayer(1);"> Luftfeuchtigkeit<br>
+    <input type="radio" name="opt[]" value="layer2" (click)="setLayer(2);"> Luftdruck<br>
+    <input type="radio" name="opt[]" value="layer3" (click)="setLayer(3);"> Temperatur<br>
+    <input type="radio" name="opt[]" value="layer4" (click)="setLayer(4);"> Partikel 25<br>
+    <input type="radio" name="opt[]" value="layer5" (click)="setLayer(5);"> Partikel 100<br><br>                    
+    
+    Tag:
+    <input type="date" [(ngModel)]="date">
+    Uhrzeit:
+    <select [(ngModel)]="hour">
+        <option value="00">0 Uhr</option>
+        <option value="01">1 Uhr</option>
+        <option value="02">2 Uhr</option>
+        <option value="03">3 Uhr</option>
+        <option value="04">4 Uhr</option>
+        <option value="05">5 Uhr</option>
+        <option value="06">6 Uhr</option>
+        <option value="07">7 Uhr</option>
+        <option value="08">8 Uhr</option>
+        <option value="09">9 Uhr</option>
+        <option value="10">10 Uhr</option>
+        <option value="11">11 Uhr</option>
+        <option value="12">12 Uhr</option>
+        <option value="13">13 Uhr</option>
+        <option value="14">14 Uhr</option>
+        <option value="15">15 Uhr</option>
+        <option value="16">16 Uhr</option>
+        <option value="17">17 Uhr</option>
+        <option value="18">18 Uhr</option>
+        <option value="19">19 Uhr</option>
+        <option value="20">20 Uhr</option>
+        <option value="21">21 Uhr</option>
+        <option value="22">22 Uhr</option>
+        <option value="23">23 Uhr</option>
+    </select>     
+    <br><br> 
+    <input type="button" value="Zeitpunkt auswaehlen" (click)="setTime()">
+    <input type="button" value="aktuelle Werte" (click)="resetTime()">
+    <p>{{alert}}</p>
+    <p>{{printDatetime}}</p>
+</div>

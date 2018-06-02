@@ -1,0 +1,22 @@
+.navcolor{
+    color:darkgrey;
+}
+.ibrlogo{
+   height:auto; 
+}
+
+footer { 
+    position: fixed;
+    padding: 10px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color:#343a40; 
+    color:darkgrey; 
+    text-align: center;
+}
+.center {
+    left:auto; 
+    right:auto
+
+}

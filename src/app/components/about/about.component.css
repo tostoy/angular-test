@@ -1,0 +1,21 @@
+.border{
+    padding:5px; 
+    margin:10px; 
+    border-style:2px solid;
+   }
+div{
+    box-sizing:border-box; 
+    
+}
+.sidebar{
+    box-sizing:border-box; 
+    float:left;
+    width:16%;   
+    text-align: center;
+}
+.middlebar{
+    box-sizing:border-box; 
+    float:left;
+    width:60%; 
+    text-align: center; 
+}

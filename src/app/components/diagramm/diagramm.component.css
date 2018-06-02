@@ -1,0 +1,45 @@
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+.button{
+    height:1px;
+    width:80%;
+    display:block; 
+    margin-left: 600px; 
+    margin-right: 10px;
+}
+
+.diagrammAuswahl{
+   
+    height:60px;
+    width:120%;
+    
+ 
+
+}
+.fallbackDatePicker{
+    height:5px;
+    width:50%;
+    
+}    
+
+.boarder{
+   
+    
+    width:180%;
+    height:130px;
+    
+}
+
+.space{
+  padding:2mm;
+}
+.buttoncolorp100{
+    background-color: blue;
+}
+.buttocolorP25{
+    background-color:yellow; 
+}
+
