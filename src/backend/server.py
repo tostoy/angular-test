@@ -42,17 +42,18 @@ class Nodes(Resource):
                      "AND datetime = (SELECT max(datetime) FROM data WHERE node_id = " + str(row[0]) + ");")
             cur2.execute(sql_query2)
             row2 = cur2.fetchone()
-            nodeList.append({
-                'node_id': row[0],
-                'latitude': row[1],
-                'longitude': row[2],
-                'datetime': row2[0],
-                'air_humidity': row2[1],
-                'air_pressure': row2[2],
-                'air_temperature': row2[3],
-                'particle_25': row2[4],
-                'particle_100': row2[5]
-            })
+            if row2 is not None:
+              nodeList.append({
+                  'node_id': row[0],
+                  'latitude': row[1],
+                  'longitude': row[2],
+                  'datetime': row2[0],
+                  'air_humidity': row2[1],
+                  'air_pressure': row2[2],
+                  'air_temperature': row2[3],
+                  'particle_25': row2[4],
+                  'particle_100': row2[5]
+              })
             row = cur.fetchone()
         return jsonify(nodeList)
 
