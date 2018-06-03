@@ -3,7 +3,7 @@ import { MouseEvent } from '@agm/core/services/google-maps-types';
 import { AppComponent } from '../../app.component'; //evtl noch durch eigene api Klasse auszutauschen
 import { } from '@types/googlemaps';
 import { HeatmapComponentColor } from './heatmap.component.color';
-import { All } from '../../models/all.model'; 
+import { All } from '../../models/all.model';
 import { ApiService } from '../../services/api.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class HeatmapComponent implements OnInit {
 
   latitude = 52.26594;
   longitude = 10.52673;
-  zoom: number = 11; 
+  zoom: number = 11;
 
   map: google.maps.Map;
   numberOfNodes: number;
@@ -39,14 +39,14 @@ export class HeatmapComponent implements OnInit {
 
   async ngOnInit() {
 
-    //map initialisieren: 
+    //map initialisieren:
     var mapProp = {
       center: new google.maps.LatLng(this.latitude, this.longitude),
       zoom: this.zoom,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    this.map = new google.maps.Map(document.getElementById("map"), mapProp);   
+    this.map = new google.maps.Map(document.getElementById("map"), mapProp);
 
     this.nodeData = await this.api.getNodes();
     this.airValueData = await this.api.getValues();
@@ -57,24 +57,24 @@ export class HeatmapComponent implements OnInit {
 
   setMarker(){
     //anzahl der Knoten bestimmen:
-    this.numberOfNodes = this.nodeData.length; 
+    this.numberOfNodes = this.nodeData.length;
     //Marker setzen:
     for(var i = 0; i < this.numberOfNodes; i++) {
-      let location = new google.maps.LatLng(this.nodeData[i].latitude, this.nodeData[i].longitude);     
+      let location = new google.maps.LatLng(this.nodeData[i].latitude, this.nodeData[i].longitude);
       var node_id: string = this.nodeData[i].node_id;
       this.marker.push(new google.maps.Marker({
         position: location,
         map: this.map,
         title: "Messstation " + node_id
       }));
-    } 
+    }
     //Info Windows setzen:
     for(var i = 0; i < this.numberOfNodes; i++) {
-      this.setInfoWindow(i); 
+      this.setInfoWindow(i);
     }
     //Info Windows Text setzen:
     for(var i = 0; i < this.numberOfNodes; i++) {
-      this.setInfoWindowContent(i); 
+      this.setInfoWindowContent(i);
     }
   }
 
@@ -83,16 +83,19 @@ export class HeatmapComponent implements OnInit {
     this.infowindow.push(new google.maps.InfoWindow());
     var marker = this.marker[i];
     var infowindow = this.infowindow[i];
+    var self  = this;
     marker.addListener('click', function() {
       this.map.setZoom(14);
       this.map.setCenter(marker.getPosition());
       infowindow.open(this.map, marker);
-    }); 
+      var text =infowindow.getContent();
+      self.printDatetime = text.replace(/<br>/g,'\n');
+    });
   }
 
   //setzt Info Window Text für Knoten Nr. i
   //für luftdruck noch ändern, falsche einheit!!!!!!!!!!
-  setInfoWindowContent(i: number) { 
+  setInfoWindowContent(i: number) {
     var content: string;
     if (this.date == null) { // aktuelle Messwerte (date ist nicht gesetzt)
       var node_id: string = this.nodeData[i].node_id;
@@ -110,39 +113,39 @@ export class HeatmapComponent implements OnInit {
       var air_pressure: string = this.airValueData[i].air_value[index].air_pressure;
       var air_temperature: string = this.airValueData[i].air_value[index].air_temperature;
       var particle_25: string = this.airValueData[i].air_value[index].particle_25;
-      var particle_100: string = this.airValueData[i].air_value[index].particle_100;          
+      var particle_100: string = this.airValueData[i].air_value[index].particle_100;
       content = "Messstation " + node_id + "<br><br>Messzeitpunkt: " + this.date + " um " + this.hour + " Uhr<br><br>";
     }
     //je nach Layer werden nur bestimmte Messwerte gelistet:
-    switch(this.layer) { 
+    switch(this.layer) {
       case 0: { //Standartansicht, alle Messwerte
-        content = content + "Luftfeuchtigkeit: " + air_humidity + " %<br>Luftdruck: " + 
+        content = content + "Luftfeuchtigkeit: " + air_humidity + " %<br>Luftdruck: " +
           air_pressure + " Pa<br>Lufttemperatur: " + air_temperature + " °C<br>PM2.5: " +
           particle_25 + " µg/m³<br>PM10: " + particle_100 + " µg/m³<br>";
         break;
       }
       case 1: { //Luftfeuchtigkeit
         content = content + "Luftfeuchtigkeit: " + air_humidity + " %";
-        break; 
-      } 
+        break;
+      }
       case 2: { //Luftdruck
         content = content + "Luftdruck: " + air_pressure + " Pa";
-        break; 
+        break;
       }
       case 3: {  //Lufttemperatur
         content = content + "Lufttemperatur: " + air_temperature + " °C";
-        break; 
+        break;
       }
       case 4: { //Partikel 25
         content = content + "PM2.5: " + particle_25 + " µg/m³";
-        break; 
+        break;
       }
       case 5: { //Partikel 100
         content = content + "PM10: " + particle_100 + " µg/m³";
-        break; 
-      } 
-    }   
-    this.infowindow[i].setContent(content);   
+        break;
+      }
+    }
+    this.infowindow[i].setContent(content);
   }
 
   //titel von marker (hover) ändern
@@ -162,35 +165,35 @@ export class HeatmapComponent implements OnInit {
       var air_pressure: string = this.airValueData[i].air_value[index].air_pressure;
       var air_temperature: string = this.airValueData[i].air_value[index].air_temperature;
       var particle_25: string = this.airValueData[i].air_value[index].particle_25;
-      var particle_100: string = this.airValueData[i].air_value[index].particle_100;          
+      var particle_100: string = this.airValueData[i].air_value[index].particle_100;
     }
     //je nach Layer werden nur bestimmte Messwerte gelistet:
-    switch(this.layer) { 
+    switch(this.layer) {
       case 0: { //Standartansicht, alle Messwerte
         newTitle = "Messstation " + node_id;
         break;
       }
       case 1: { //Luftfeuchtigkeit
         newTitle = "Luftfeuchtigkeit: " + air_humidity + " %";
-        break; 
-      } 
+        break;
+      }
       case 2: { //Luftdruck
         newTitle = "Luftdruck: " + air_pressure + " Pa";
-        break; 
+        break;
       }
       case 3: {  //Lufttemperatur
         newTitle = "Lufttemperatur: " + air_temperature + " °C";
-        break; 
+        break;
       }
       case 4: { //Partikel 25
         newTitle = "PM2.5: " + particle_25 + " µg/m³";
-        break; 
+        break;
       }
       case 5: { //Partikel 100
         newTitle = "PM10: " + particle_100 + " µg/m³";
-        break; 
-      } 
-    }   
+        break;
+      }
+    }
     this.marker[i].setTitle(newTitle);
   }
 
@@ -230,7 +233,7 @@ export class HeatmapComponent implements OnInit {
           // Standartansicht, also keine Layer Darstellung:
           this.marker[i].setIcon(null); //icon wird gelöscht -> Standart Marker Symbol
         } else {
-          // Layeransicht, also MarkerIcons setzen: 
+          // Layeransicht, also MarkerIcons setzen:
           var perc = this.airValueToPerc(i);
           var radius = this.airValueToRadius(i, perc);
           this.marker[i].setIcon({
@@ -239,7 +242,7 @@ export class HeatmapComponent implements OnInit {
             fillColor: this.percToColor(perc),
             fillOpacity: 0.9,
             strokeWeight: 0
-          });  
+          });
         }
       }
     }
@@ -255,7 +258,7 @@ export class HeatmapComponent implements OnInit {
     }
   }
 
-  //gibt für den jeweiligen Luftwert (->Layer) und Zeitpunkt (->date und time) der Messstation i 
+  //gibt für den jeweiligen Luftwert (->Layer) und Zeitpunkt (->date und time) der Messstation i
   //eine Zahl zwischen 0 und 100 aus
   airValueToPerc(i: number) {
     var r: number;
@@ -273,28 +276,28 @@ export class HeatmapComponent implements OnInit {
       var particle_25 = this.airValueData[i].air_value[index].particle_25;
       var particle_100 = this.airValueData[i].air_value[index].particle_100;
     }
-    switch(this.layer) { 
+    switch(this.layer) {
       case 1: { //Luftfeuchtigkeit zwischen 0 und 100
         r = air_humidity;
-        break; 
-      } 
+        break;
+      }
       case 2: { //Luftdruck <950 - >1050
         r = (air_pressure * 0.01) - 950;
-        break; 
+        break;
       }
       case 3: {  //Temperatur zwischen <-20 und >40
         r = (air_temperature + 20) * (10/6);
-        break; 
+        break;
       }
       case 4: { //Partikel 25 zwischen 0 und >80
         r = particle_25 * (10/8);
-        break; 
+        break;
       }
       case 5: { //Partikel 100 zwischen 0 und >100
         r = particle_100;
-        break; 
-      } 
-    } 
+        break;
+      }
+    }
     if (r < 0) {r = 0;}
     if (r > 100) {r = 100;}
     return r;
@@ -303,34 +306,34 @@ export class HeatmapComponent implements OnInit {
   //gibt für den jeweiligen Luftwert (->Layer und perc) Zahl zur Vergroesserung des Radius der Icons aus
   airValueToRadius(i: number, perc: number) {
     var radius: number;
-    switch(this.layer) { 
+    switch(this.layer) {
       case 1:   //Luftfeuchtigkeit
       case 2: { //Luftdruck
         radius = perc * 0.05;
-        break; 
+        break;
       }
       case 3: { //Temperatur
         radius = 5;
-        break; 
+        break;
       }
       case 4:   //Partikel 25
       case 5: { //Partikel 100
         radius = perc * 0.13;
-        break; 
+        break;
       }
     }
-    return radius; 
+    return radius;
   }
 
   //gibt basierend auf Prozentzahl Farbwert als string aus
   percToColor(perc: number) {
     var col = new HeatmapComponentColor();
     var hexColor: string;
-    switch(this.layer) { 
+    switch(this.layer) {
       case 1: { //Luftfeuchtigkeit
         hexColor = col.perc2color('c8daec', '326496', perc);
-        break; 
-      } 
+        break;
+      }
       case 2: { //Luftdruck
         hexColor = col.perc2color('b5b5b5', '4b4b4b', perc);
         break;
@@ -347,9 +350,9 @@ export class HeatmapComponent implements OnInit {
       case 5: { //Partikel 100
         hexColor = col.perc2colorRG(perc);
         break;
-      } 
-    } 
+      }
+    }
     return hexColor;
   }
-    
+
 }
