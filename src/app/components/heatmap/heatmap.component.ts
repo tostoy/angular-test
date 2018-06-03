@@ -88,6 +88,12 @@ export class HeatmapComponent implements OnInit {
       this.map.setZoom(14);
       this.map.setCenter(marker.getPosition());
       infowindow.open(this.map, marker);
+      for(var j=0;j< self.infowindow.length;j++ ){
+        if(j !== i){
+          self.infowindow[j].close();
+        }
+      }
+
       var text:any =infowindow.getContent();
       self.printDatetime = text.split('<br>');
     });

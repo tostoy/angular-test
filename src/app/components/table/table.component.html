@@ -1,51 +1,105 @@
 <input type="date" [(ngModel)]="date">
+<span>start_time</span>
+<select [(ngModel)]="start_hour">
+  <option value="00">0 Uhr</option>
+  <option value="01">1 Uhr</option>
+  <option value="02">2 Uhr</option>
+  <option value="03">3 Uhr</option>
+  <option value="04">4 Uhr</option>
+  <option value="05">5 Uhr</option>
+  <option value="06">6 Uhr</option>
+  <option value="07">7 Uhr</option>
+  <option value="08">8 Uhr</option>
+  <option value="09">9 Uhr</option>
+  <option value="10">10 Uhr</option>
+  <option value="11">11 Uhr</option>
+  <option value="12">12 Uhr</option>
+  <option value="13">13 Uhr</option>
+  <option value="14">14 Uhr</option>
+  <option value="15">15 Uhr</option>
+  <option value="16">16 Uhr</option>
+  <option value="17">17 Uhr</option>
+  <option value="18">18 Uhr</option>
+  <option value="19">19 Uhr</option>
+  <option value="20">20 Uhr</option>
+  <option value="21">21 Uhr</option>
+  <option value="22">22 Uhr</option>
+  <option value="23">23 Uhr</option>
+</select>
+<span>end_time</span>
+<select [(ngModel)]="end_hour">
+  <option value="00">0 Uhr</option>
+  <option value="01">1 Uhr</option>
+  <option value="02">2 Uhr</option>
+  <option value="03">3 Uhr</option>
+  <option value="04">4 Uhr</option>
+  <option value="05">5 Uhr</option>
+  <option value="06">6 Uhr</option>
+  <option value="07">7 Uhr</option>
+  <option value="08">8 Uhr</option>
+  <option value="09">9 Uhr</option>
+  <option value="10">10 Uhr</option>
+  <option value="11">11 Uhr</option>
+  <option value="12">12 Uhr</option>
+  <option value="13">13 Uhr</option>
+  <option value="14">14 Uhr</option>
+  <option value="15">15 Uhr</option>
+  <option value="16">16 Uhr</option>
+  <option value="17">17 Uhr</option>
+  <option value="18">18 Uhr</option>
+  <option value="19">19 Uhr</option>
+  <option value="20">20 Uhr</option>
+  <option value="21">21 Uhr</option>
+  <option value="22">22 Uhr</option>
+  <option value="23">23 Uhr</option>
+</select>
 <input type="button" value="Zeitpunkt auswaehlen" (click)="setTime()">
 
-    
+
 
 <div>
-    
 
-    <mat-table [dataSource]="dataSource">
-      
-      <ng-container matColumnDef="air_humidity">
-        <mat-header-cell *matHeaderCellDef> Luftfeuchtigkeit </mat-header-cell>
-        <mat-cell *matCellDef="let all"> {{all.air_humidity}} </mat-cell>
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="air_humidity" >
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header> Luftfeuchtigkeit </th>
+        <td  mat-cell *matCellDef="let all"> {{all.air_humidity}} </td>
       </ng-container>
       <ng-container matColumnDef="air_pressure">
-        <mat-header-cell *matHeaderCellDef> Luftdruck </mat-header-cell>
-        <mat-cell *matCellDef="let all"> {{all.air_pressure}} </mat-cell>
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header> Luftdruck </th>
+        <td  mat-cell *matCellDef="let all"> {{all.air_pressure}} </td>
       </ng-container>
       <ng-container matColumnDef="air_temperature">
-        <mat-header-cell *matHeaderCellDef> Temperatur </mat-header-cell>
-        <mat-cell *matCellDef="let all"> {{all.air_temperature}} </mat-cell>
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header> Temperatur </th>
+        <td  mat-cell *matCellDef="let all"> {{all.air_temperature}} </td>
       </ng-container>
       <ng-container matColumnDef="date">
-        <mat-header-cell *matHeaderCellDef> Zeitstempel </mat-header-cell>
-        <mat-cell *matCellDef="let all"> {{all.datetime}} </mat-cell>
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header> Zeitstempel </th>
+        <td  mat-cell *matCellDef="let all"> {{all.datetime}} </td>
       </ng-container>
       <ng-container matColumnDef="node_id">
-        <mat-header-cell *matHeaderCellDef> node_id </mat-header-cell>
-        <mat-cell *matCellDef="let all"> {{all.node_id}} </mat-cell>
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header> node_id </th>
+        <td  mat-cell *matCellDef="let all"> {{all.node_id}} </td>
       </ng-container>
       <ng-container matColumnDef="particle_100">
-        <mat-header-cell *matHeaderCellDef> Partikel 100 </mat-header-cell>
-        <mat-cell *matCellDef="let all"> {{all.particle_100}} </mat-cell>
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header> Partikel 100 </th>
+        <td  mat-cell *matCellDef="let all"> {{all.particle_100}} </td>
       </ng-container>
       <ng-container matColumnDef="particle_25">
-        <mat-header-cell *matHeaderCellDef> Partikel 25 </mat-header-cell>
-        <mat-cell *matCellDef="let all"> {{all.particle_25}} </mat-cell>
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header> Partikel 25 </th>
+        <td  mat-cell *matCellDef="let all"> {{all.particle_25}} </td>
       </ng-container>
       <ng-container matColumnDef="long">
-        <mat-header-cell *matHeaderCellDef> Longitude </mat-header-cell>
-        <mat-cell *matCellDef="let all"> {{all.longitude}} </mat-cell>
+        <th mat-header-cell *matHeaderCellDef> Longitude </th>
+        <td mat-cell *matCellDef="let all"> {{all.longitude}} </td>
       </ng-container>
       <ng-container matColumnDef="lat">
-        <mat-header-cell *matHeaderCellDef> Latitude </mat-header-cell>
-        <mat-cell *matCellDef="let all"> {{all.latitude}} </mat-cell>
+        <th mat-header-cell *matHeaderCellDef > Latitude </th>
+        <td mat-cell *matCellDef="let all"> {{all.latitude}} </td>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
   </div>

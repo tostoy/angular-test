@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs'; 
-import { All } from '../models/all.model'; 
+import { Observable } from 'rxjs';
+import { All } from '../models/all.model';
 
 @Injectable()
 export class ApiService {
@@ -19,11 +19,16 @@ export class ApiService {
     return this.httpClient.get(this.url + 'airvalues').toPromise();
   }
 
-  public getAll(date) : Promise<any> {
-     this.param = date; 
+  public getAll(date,start_hour, end_hour) : Promise<any> {
+     this.param = date;
      console.log(this.param)
-    return this.httpClient.get(this.url + 'allvalues/'+this.param).toPromise(); 
+    return this.httpClient.get(this.url + 'allvalues/'+this.param,{
+      params:{
+        start_hour,
+        end_hour
+      }
+    }).toPromise();
   }
 
-  
+
 }

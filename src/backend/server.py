@@ -105,8 +105,10 @@ class AirValues(Resource):
 class AllValues(Resource):
     def get(self, date):
         valueList=[]
+        start_hour = date +" "+ request.args.get('start_hour')
+        end_hour = date +" "+ request.args.get('end_hour')
         cur = mysql.connection.cursor()
-        cur.execute("select * from data where datetime like '"+date+"%' ")
+        cur.execute("select * from data where datetime >= '"+start_hour+"' and datetime <='"+ end_hour+"'")
         row = cur.fetchone()
         while row is not None:
             valueList.append({
