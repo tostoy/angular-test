@@ -63,6 +63,7 @@
     <input type="button" value="Zeitpunkt auswaehlen" (click)="setTime()">
     <input type="button" value="aktuelle Werte" (click)="resetTime()">
     <p>{{alert}}</p>
-
+    <div style="height:100px;overflow: scroll">
     <p *ngFor="let item of printDatetime">{{item}}</p>
+    </div>
 </div>
