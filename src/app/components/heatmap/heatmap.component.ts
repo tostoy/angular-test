@@ -28,7 +28,7 @@ export class HeatmapComponent implements OnInit {
   layer: number = 0; //0=default, 1=Luftfeuchtigkeit, 2=Luftdruck, 3=Temperatur, 4=Partikel25, 5=Partikel100
 
   alert: string;
-  printDatetime: string = "aktuelle Messwerte";
+  printDatetime: any = ["aktuelle Messwerte"];
 
   nodeData;
   airValueData;
@@ -89,7 +89,7 @@ export class HeatmapComponent implements OnInit {
       this.map.setCenter(marker.getPosition());
       infowindow.open(this.map, marker);
       var text:any =infowindow.getContent();
-      self.printDatetime = text.replace(/<br>/g,'\n');
+      self.printDatetime = text.split('<br>');
     });
   }
 
@@ -248,12 +248,12 @@ export class HeatmapComponent implements OnInit {
     }
     if (count == this.numberOfNodes) {
       this.alert = "keine Messwerte zu gewaehltem Zeitpunkt vorhanden";
-      this.printDatetime = "";
+      this.printDatetime[0] = "";
     } else {
       if (this.date ==  null) {
-        this.printDatetime = "aktuelle Messwerte";
+        this.printDatetime[0] = "aktuelle Messwerte";
       } else {
-        this.printDatetime = "Messwerte am " + this.date + " um " + this.hour + " Uhr";
+        this.printDatetime[0] = "Messwerte am " + this.date + " um " + this.hour + " Uhr";
       }
     }
   }

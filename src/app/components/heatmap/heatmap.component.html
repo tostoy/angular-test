@@ -28,8 +28,8 @@
     <input type="radio" name="opt[]" value="layer2" (click)="setLayer(2);"> Luftdruck<br>
     <input type="radio" name="opt[]" value="layer3" (click)="setLayer(3);"> Temperatur<br>
     <input type="radio" name="opt[]" value="layer4" (click)="setLayer(4);"> Partikel 25<br>
-    <input type="radio" name="opt[]" value="layer5" (click)="setLayer(5);"> Partikel 100<br><br>                    
-    
+    <input type="radio" name="opt[]" value="layer5" (click)="setLayer(5);"> Partikel 100<br><br>
+
     Tag:
     <input type="date" [(ngModel)]="date">
     Uhrzeit:
@@ -58,10 +58,11 @@
         <option value="21">21 Uhr</option>
         <option value="22">22 Uhr</option>
         <option value="23">23 Uhr</option>
-    </select>     
-    <br><br> 
+    </select>
+    <br><br>
     <input type="button" value="Zeitpunkt auswaehlen" (click)="setTime()">
     <input type="button" value="aktuelle Werte" (click)="resetTime()">
     <p>{{alert}}</p>
-    <p>{{printDatetime}}</p>
+
+    <p *ngFor="let item of printDatetime">{{item}}</p>
 </div>
