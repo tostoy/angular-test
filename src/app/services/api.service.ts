@@ -18,14 +18,36 @@ export class ApiService {
   public async getValues() : Promise<any> {
     return this.httpClient.get(this.url + 'airvalues').toPromise();
   }
+  public async download(date,start_hour, end_hour,page_index): Promise<any> {
+    this.param = date;
+    console.log(this.param)
+    const data= await this.httpClient.get(this.url + 'download/'+this.param,{
+    params: {
+      start_hour,
+      end_hour,
+      page_index
 
-  public getAll(date,start_hour, end_hour) : Promise<any> {
+    },
+    responseType:'text'
+     }).toPromise();
+    let a = document.createElement('a');
+    //let url = window.URL.createObjectURL(data);
+    let blob = new Blob([data], { type:'text/csv'});
+    let windowUrl = (window.URL || window.webkitURL);
+    let url = windowUrl.createObjectURL(blob);
+    a.href = url;
+    a.download = 'data.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+  public getAll(date,start_hour, end_hour,page_index) : Promise<any> {
      this.param = date;
      console.log(this.param)
     return this.httpClient.get(this.url + 'allvalues/'+this.param,{
       params:{
         start_hour,
-        end_hour
+        end_hour,
+        page_index
       }
     }).toPromise();
   }

@@ -54,8 +54,14 @@
   <option value="23">23 Uhr</option>
 </select>
 <input type="button" value="Zeitpunkt auswaehlen" (click)="setTime()">
-
-
+<input type="button" value="download" (click)="download()">
+<div style="display:inline">
+<mat-paginator [length]="length"
+               [pageIndex]="pageIndex"
+               [pageSize]="20"
+                (page)="setPage($event)">
+</mat-paginator>
+</div>
 <!--<div>-->
   <!--<table mat-table [dataSource]="dataSource1" matSort class="mat-elevation-z8">-->
 

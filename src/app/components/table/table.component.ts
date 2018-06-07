@@ -32,6 +32,8 @@ export class TableComponent implements OnInit {
   public date;
   public start_hour='00';
   public end_hour='00';
+  public pageIndex=0;
+  public length=0;
   @ViewChild(MatSort) sort: MatSort;
   alert: string;
 
@@ -45,12 +47,24 @@ export class TableComponent implements OnInit {
     //this.dataSource1.sort = this.sort;
     this.dataSource.sort = this.sort;
   }
-
+  async download(){
+    const ret = await this.api.download(this.date, this.start_hour, this.end_hour, this.pageIndex);
+  }
+  async setPage(e){
+    console.log(e);
+    this.pageIndex = e.pageIndex;
+    const ret = await this.api.getAll(this.date, this.start_hour, this.end_hour, this.pageIndex);
+    this.length = ret[0];
+    this.dataSource =new MatTableDataSource( ret[1]);
+    this.dataSource.sort = this.sort;
+  }
  async  setTime() {
     if (this.date === undefined) { //date ist nicht gesetzt
       this.alert = "keinen Tag ausgewaehlt";
     } else {
-      this.dataSource =new MatTableDataSource( await this.api.getAll(this.date, this.start_hour, this.end_hour));
+      const ret = await this.api.getAll(this.date, this.start_hour, this.end_hour, this.pageIndex);
+      this.length = ret[0];
+      this.dataSource =new MatTableDataSource( ret[1]);
       this.dataSource.sort = this.sort;
     }
   }

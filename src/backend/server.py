@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 
 from flask_mysqldb import MySQL
-from flask import Flask, request
+from flask import Flask, request, Response
 from flask_cors import CORS, cross_origin
 from flask_restful import Resource, Api
 from json import dumps
@@ -100,15 +100,34 @@ class AirValues(Resource):
                 row = cur.fetchone()
             resultList.append({'node_id': id, 'air_value': idResultList})
         return jsonify(resultList)
+class download(Resource):
+  def get(self, date):
+    valueList=[]
+    start_hour = date +" "+ request.args.get('start_hour')
+    end_hour = date +" "+ request.args.get('end_hour')
+    page_index = int(request.args.get('page_index'))
+    cur = mysql.connection.cursor()
+    cur.execute("select *  from data where datetime >= '"+start_hour+"' and datetime <='"+ end_hour+"'")
+    row = cur.fetchone()
+    content=''
+    while row is not None:
+      content += str(row[0])+','+str(row[1])+','+str(row[2])+','+str(row[3])+','+str(row[4])+','+str(row[5])+','+str(row[6])+','+str(row[7])+','+str(row[8])+','+str(row[9])+'\n'
+      row = cur.fetchone()
 
+    return Response(
+        content,
+        mimetype="text/csv",
+        headers={"Content-disposition":
+                   "attachment; filename=data.csv"})
 
 class AllValues(Resource):
     def get(self, date):
         valueList=[]
         start_hour = date +" "+ request.args.get('start_hour')
         end_hour = date +" "+ request.args.get('end_hour')
+        page_index = int(request.args.get('page_index'))
         cur = mysql.connection.cursor()
-        cur.execute("select * from data where datetime >= '"+start_hour+"' and datetime <='"+ end_hour+"'")
+        cur.execute("select * from data where datetime >= '"+start_hour+"' and datetime <='"+ end_hour+"' limit "+str(page_index*20)+","+str(page_index*20+20))
         row = cur.fetchone()
         while row is not None:
             valueList.append({
@@ -124,7 +143,10 @@ class AllValues(Resource):
                 'longitude': str(row[9])
             })
             row = cur.fetchone()
-        return jsonify(valueList)
+        cur.execute("select count(1) from data where datetime >= '"+start_hour+"' and datetime <='"+ end_hour+"'")
+        count =cur.fetchone()[0]
+        ret=[count,valueList]
+        return jsonify(ret)
 
 
 
@@ -132,7 +154,7 @@ class AllValues(Resource):
 api.add_resource(Nodes, '/nodes') # Route_1
 api.add_resource(AirValues, '/airvalues') # Route_2
 api.add_resource(AllValues, '/allvalues/<date>') # Route_3
-
+api.add_resource(download, '/download/<date>') # Route_3
 
 if __name__ == '__main__':
     app.run(port=5002)
