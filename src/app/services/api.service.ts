@@ -33,7 +33,7 @@ export class ApiService {
     let a = document.createElement('a');
     //let url = window.URL.createObjectURL(data);
     let blob = new Blob([data], { type:'text/csv'});
-    let windowUrl = (window.URL || window.webkitURL);
+    let windowUrl = window.URL;
     let url = windowUrl.createObjectURL(blob);
     a.href = url;
     a.download = 'data.csv';
